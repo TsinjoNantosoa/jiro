@@ -335,6 +335,37 @@ tbody tr:hover {
   transform: translateY(0);
 }
 
+.scroll-top-btn {
+  position: fixed;
+  right: 14px;
+  bottom: 16px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #1976e6 0%, #0d67d1 100%);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 800;
+  box-shadow: 0 10px 18px rgba(13, 103, 209, 0.3);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  z-index: 40;
+}
+
+.scroll-top-btn.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-top-btn:hover {
+  filter: brightness(1.05);
+}
+
 @media (max-width: 900px) {
   .app-shell {
     padding: 10px;
@@ -382,6 +413,11 @@ tbody tr:hover {
 
   .ghost {
     width: 100%;
+  }
+
+  .scroll-top-btn {
+    right: 12px;
+    bottom: 12px;
   }
 }
 
@@ -435,33 +471,47 @@ tbody tr:hover {
   .readings-table tr {
     border: 1px solid #d6e2f0;
     border-radius: 12px;
-    padding: 8px;
+    padding: 10px;
     background: #ffffff;
     box-shadow: 0 2px 8px rgba(13, 41, 79, 0.06);
   }
 
   .readings-table td {
     border-bottom: none;
-    padding: 8px 6px;
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    align-items: center;
-    gap: 8px;
+    padding: 7px 6px;
+    display: block;
+    min-height: 44px;
   }
 
   .readings-table td::before {
     content: attr(data-label);
+    display: block;
     font-size: 0.78rem;
     line-height: 1.25;
     font-weight: 800;
     color: #2e4f79;
     text-transform: uppercase;
     letter-spacing: 0.03em;
+    margin-bottom: 6px;
   }
 
   .readings-table td input {
     width: 100%;
     min-width: 0;
+  }
+
+  .readings-table td[data-label='Consommation (kWh)'],
+  .readings-table td[data-label='Montant (AR)'] {
+    font-weight: 700;
+    color: #1b3f6b;
+  }
+
+  .readings-table td[data-label='Sous-compteur'] {
+    padding-top: 2px;
+  }
+
+  .readings-table td[data-label='Sous-compteur']::before {
+    margin-bottom: 4px;
   }
 
   .kpi-grid {
@@ -482,5 +532,18 @@ tbody tr:hover {
 
   .meter-summary article {
     padding: 9px 10px;
+  }
+
+  .meter-summary strong,
+  .kpi-grid strong {
+    line-height: 1.2;
+  }
+
+  .scroll-top-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    right: 10px;
+    bottom: 10px;
   }
 }

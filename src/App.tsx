@@ -8,10 +8,24 @@ import './App.css'
 function App() {
   const [state, setState] = useState<AppState>(() => loadState())
   const [selectedMeterId, setSelectedMeterId] = useState<MeterId>('meter1')
+  const [showScrollTop, setShowScrollTop] = useState(false)
 
   useEffect(() => {
     saveState(state)
   }, [state])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 360)
+    }
+
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   const mainResults = useMemo(() => {
     return MAIN_METERS.map((meter) => {
@@ -156,6 +170,10 @@ function App() {
 
   const resetAll = () => {
     setState(createDefaultState())
+  }
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const visibleMeters = MAIN_METERS.filter((meter) => meter.id === selectedMeterId)
@@ -417,6 +435,15 @@ function App() {
           </section>
         )
       })}
+
+      <button
+        type="button"
+        className={`scroll-top-btn ${showScrollTop ? 'show' : ''}`}
+        onClick={scrollToTop}
+        aria-label="Aller en haut"
+      >
+        ↑
+      </button>
     </main>
   )
 }
